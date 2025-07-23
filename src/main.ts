@@ -39,8 +39,16 @@ async function init() {
   });
 
   app.ticker.add(() => {
+    // Update positions
     for (const circle of circles) {
       circle.update(app);
+    }
+
+    // Check collisions between every pair
+    for (let i = 0; i < circles.length; i++) {
+      for (let j = i + 1; j < circles.length; j++) {
+        circles[i].checkCollision(circles[j]);
+      }
     }
   });
 }

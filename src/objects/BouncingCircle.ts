@@ -9,7 +9,7 @@ export class BouncingCircle extends Container {
   constructor(radius: number, color: number, speed: number, app: Application) {
     super();
 
-    this.radius = radius; 
+    this.radius = radius;
 
     this.shape = new Graphics();
     this.shape.circle(0, 0, radius);
@@ -27,12 +27,40 @@ export class BouncingCircle extends Container {
   update(app: Application) {
     this.x += this.vx;
     this.y += this.vy;
-    
+
+    // Wall bounce
     if (this.x + this.radius > app.screen.width || this.x - this.radius < 0) {
       this.vx *= -1;
     }
     if (this.y + this.radius > app.screen.height || this.y - this.radius < 0) {
       this.vy *= -1;
+    }
+  }
+
+  checkCollision(other: BouncingCircle) {
+    const dx = this.x - other.x;
+    const dy = this.y - other.y;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    const minDist = this.radius + other.radius;
+
+    if (distance < minDist) {
+      // Basic elastic collision: swap velocity vectors
+      const tempVx = this.vx;
+      const tempVy = this.vy;
+      this.vx = other.vx;
+      this.vy = other.vy;
+      other.vx = tempVx;
+      other.vy = tempVy;
+
+      // Move them apart to avoid sticking
+      const overlap = 0.5 * (minDist - distance + 1);
+      const nx = dx / distance;
+      const ny = dy / distance;
+
+      this.x += nx * overlap;
+      this.y += ny * overlap;
+      other.x -= nx * overlap;
+      other.y -= ny * overlap;
     }
   }
 }

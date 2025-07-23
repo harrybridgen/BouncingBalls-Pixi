@@ -5,7 +5,7 @@ An interactive physics toy built with [PixiJS v8](https://pixijs.com/) and TypeS
 Click anywhere to spawn bouncing balls with random speed, direction, and color.  
 Circles bounce off each other and the canvas edges, using simple elastic collision and spatial partitioning.
 
-demo preview TODO
+![demo preview](BouncingBallsDEMO.gif)
 
 ---
 

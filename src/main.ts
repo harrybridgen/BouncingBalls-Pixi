@@ -1,4 +1,5 @@
-import { Application, Graphics } from 'pixi.js';
+import { Application } from 'pixi.js';
+import { BouncingCircle } from './objects/BouncingCircle';
 
 async function init() {
   const app = new Application();
@@ -11,39 +12,35 @@ async function init() {
 
   document.body.appendChild(app.canvas);
 
-  const radius = 20;
-  const circleColour = 0xff0000;
-  const graphics = new Graphics();
+  const circles: BouncingCircle[] = [];
 
-  graphics.circle(0, 0, radius);
-  graphics.fill({ color: circleColour });
+  function spawnCircle(x: number, y: number) {
+    const radius = Math.random() * 20 + 10; 
+    const color = Math.floor(Math.random() * 0xffffff);
+    const speed = Math.random() * 2 + 1; 
 
-  graphics.x = app.screen.width / 2;
-  graphics.y = app.screen.height / 2;
+    const circle = new BouncingCircle(radius, color, speed, app);
 
-  app.stage.addChild(graphics);
+    circle.x = x;
+    circle.y = y;
 
-  const speed = Math.random() * 2 + 1;
-  const angle = Math.random() * Math.PI * 2;
-  let vx = Math.cos(angle) * speed;
-  let vy = Math.sin(angle) * speed;
+    app.stage.addChild(circle);
+    circles.push(circle);
+  }
+
+  spawnCircle(app.screen.width / 2, app.screen.height / 2);
+
+  app.canvas.addEventListener('pointerdown', (e) => {
+    const rect = app.canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    spawnCircle(x, y);
+  });
 
   app.ticker.add(() => {
-    graphics.x += vx;
-    graphics.y += vy;
-
-    if (
-      graphics.x + radius > app.screen.width ||
-      graphics.x - radius < 0
-    ) {
-      vx *= -1;
-    }
-
-    if (
-      graphics.y + radius > app.screen.height ||
-      graphics.y - radius < 0
-    ) {
-      vy *= -1;
+    for (const circle of circles) {
+      circle.update(app);
     }
   });
 }

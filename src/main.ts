@@ -1,15 +1,17 @@
 import { Application } from 'pixi.js';
 import { BouncingCircle } from './objects/BouncingCircle';
+import { SpatialGrid } from './objects/SpatialGrid';
 
 async function init() {
   const app = new Application();
 
   await app.init({
-    width: 800,
+    width: 600,
     height: 600,
     backgroundColor: 0x1099bb,
   });
 
+  const grid = new SpatialGrid(100);
   document.body.appendChild(app.canvas);
 
   const circles: BouncingCircle[] = [];
@@ -28,8 +30,6 @@ async function init() {
     circles.push(circle);
   }
 
-  spawnCircle(app.screen.width / 2, app.screen.height / 2);
-
   app.canvas.addEventListener('pointerdown', (e) => {
     const rect = app.canvas.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -39,18 +39,23 @@ async function init() {
   });
 
   app.ticker.add(() => {
-    // Update positions
+    grid.clear();
+
     for (const circle of circles) {
       circle.update(app);
+      grid.insert(circle);
     }
 
-    // Check collisions between every pair
-    for (let i = 0; i < circles.length; i++) {
-      for (let j = i + 1; j < circles.length; j++) {
-        circles[i].checkCollision(circles[j]);
+    for (const circle of circles) {
+      const nearby = grid.getNearby(circle);
+      for (const other of nearby) {
+        if (other !== circle) {
+          circle.checkCollision(other, app);
+        }
       }
     }
   });
+
 }
 
 init();

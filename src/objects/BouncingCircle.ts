@@ -28,7 +28,6 @@ export class BouncingCircle extends Container {
     this.x += this.vx;
     this.y += this.vy;
 
-    // Wall bounce
     if (this.x + this.radius > app.screen.width || this.x - this.radius < 0) {
       this.vx *= -1;
     }
@@ -37,14 +36,13 @@ export class BouncingCircle extends Container {
     }
   }
 
-  checkCollision(other: BouncingCircle) {
+  checkCollision(other: BouncingCircle, app: Application) {
     const dx = this.x - other.x;
     const dy = this.y - other.y;
     const distance = Math.sqrt(dx * dx + dy * dy);
     const minDist = this.radius + other.radius;
 
     if (distance < minDist) {
-      // Basic elastic collision: swap velocity vectors
       const tempVx = this.vx;
       const tempVy = this.vy;
       this.vx = other.vx;
@@ -52,7 +50,6 @@ export class BouncingCircle extends Container {
       other.vx = tempVx;
       other.vy = tempVy;
 
-      // Move them apart to avoid sticking
       const overlap = 0.5 * (minDist - distance + 1);
       const nx = dx / distance;
       const ny = dy / distance;
@@ -61,6 +58,14 @@ export class BouncingCircle extends Container {
       this.y += ny * overlap;
       other.x -= nx * overlap;
       other.y -= ny * overlap;
+      
+      this.clampPosition(app);
+      other.clampPosition(app);
     }
   }
+  clampPosition(app: Application) {
+    this.x = Math.max(this.radius, Math.min(app.screen.width - this.radius, this.x));
+    this.y = Math.max(this.radius, Math.min(app.screen.height - this.radius, this.y));
+  }
+  
 }

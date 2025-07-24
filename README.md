@@ -11,6 +11,7 @@ An interactive physics toy built with [PixiJS v8](https://pixijs.com/) and TypeS
 - Elastic collisions
 - Lightweight & fast
 - Spatial Partitioning
+- Dynamic resizing of window, balls are "pushed" away from edge
 
 ---
 
@@ -27,7 +28,6 @@ An interactive physics toy built with [PixiJS v8](https://pixijs.com/) and TypeS
 - **Pixi.js v8** - WebGL renderer for graphics
 - **TypeScript** - Typed, modular structure
 - **Vite** - Fast dev/build tooling
-- **Spatial Grid** - Optimized collision detection
 - **GitHub Pages** - Static deployment
 
 ---

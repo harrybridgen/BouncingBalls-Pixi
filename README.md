@@ -6,7 +6,7 @@ An interactive physics toy built with [PixiJS v8](https://pixijs.com/) and TypeS
 
 ## Live Demo
 
-[Play it on GitHub Pages](https://harrybridgen.github.io/BouncingBalls-Pixi-Demo/)
+[Play it on GitHub Pages](https://harrybridgen.github.io/BouncingBalls-Pixi/)
 
 <img src="BouncingBallsDEMO.gif" alt="demo preview GIF" style="width: 60%;">
 

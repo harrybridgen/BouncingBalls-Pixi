@@ -6,8 +6,7 @@ async function init() {
   const app = new Application();
 
   await app.init({
-    width: 600,
-    height: 600,
+    resizeTo: window,
     backgroundColor: 0x1099bb,
   });
 
@@ -50,21 +49,26 @@ async function init() {
 
   app.ticker.add(() => {
     grid.clear();
+  
+    for (let i = circles.length - 1; i >= 0; i--) {
+      const circle = circles[i];
 
-    for (const circle of circles) {
       circle.update(app);
       grid.insert(circle);
-    }
-
-    for (const circle of circles) {
+  
       const nearby = grid.getNearby(circle);
       for (const other of nearby) {
         if (other !== circle) {
           circle.checkCollision(other, app);
         }
       }
+  
+      if (circle.isOutside(app)) {
+        app.stage.removeChild(circle);
+        circles.splice(i, 1);
+      }
     }
-
+  
     statsText.text = `Balls: ${circles.length}\nFPS: ${Math.round(app.ticker.FPS)}`;
   });
   app.stage.addChild(statsText);

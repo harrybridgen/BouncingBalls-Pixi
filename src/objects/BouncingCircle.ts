@@ -30,12 +30,22 @@ export class BouncingCircle extends Container {
 
     if (this.x + this.radius > app.screen.width || this.x - this.radius < 0) {
       this.vx *= -1;
+      this.x = Math.max(this.radius, Math.min(app.screen.width - this.radius, this.x));
     }
     if (this.y + this.radius > app.screen.height || this.y - this.radius < 0) {
       this.vy *= -1;
+      this.y = Math.max(this.radius, Math.min(app.screen.height - this.radius, this.y));
     }
   }
-
+  isOutside(app: Application): boolean {
+    return (
+      this.x - this.radius < 0 ||
+      this.x + this.radius > app.screen.width ||
+      this.y - this.radius < 0 ||
+      this.y + this.radius > app.screen.height
+    );
+  }
+  
   checkCollision(other: BouncingCircle, app: Application) {
     const dx = this.x - other.x;
     const dy = this.y - other.y;

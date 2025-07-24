@@ -4,6 +4,14 @@ An interactive physics toy built with [PixiJS v8](https://pixijs.com/) and TypeS
 
 ---
 
+## Live Demo
+
+[Play it on GitHub Pages](https://harrybridgen.github.io/BouncingBalls-Pixi-Demo/)
+
+![demo preview GIF](BouncingBallsDEMO.gif)
+
+---
+
 ## Features
 
 - Click to spawn balls
@@ -12,14 +20,6 @@ An interactive physics toy built with [PixiJS v8](https://pixijs.com/) and TypeS
 - Lightweight & fast
 - Spatial Partitioning
 - Dynamic resizing of window, balls are "pushed" away from edge
-
----
-
-## Live Demo
-
-[Play it on GitHub Pages](https://harrybridgen.github.io/BouncingBalls-Pixi-Demo/)
-
-![demo preview GIF](BouncingBallsDEMO.gif)
 
 ---
 

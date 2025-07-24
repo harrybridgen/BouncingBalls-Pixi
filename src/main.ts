@@ -69,7 +69,7 @@ async function init() {
       }
     }
   
-    statsText.text = `Balls: ${circles.length}\nFPS: ${Math.round(app.ticker.FPS)}`;
+    statsText.text = `Balls: ${circles.length}\nFPS: ${Math.round(app.ticker.FPS) }\nClick the screen to spawn a bouncing ball!`;
   });
   app.stage.addChild(statsText);
 }

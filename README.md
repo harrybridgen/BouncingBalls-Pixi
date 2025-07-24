@@ -8,7 +8,7 @@ An interactive physics toy built with [PixiJS v8](https://pixijs.com/) and TypeS
 
 [Play it on GitHub Pages](https://harrybridgen.github.io/BouncingBalls-Pixi-Demo/)
 
-![demo preview GIF](BouncingBallsDEMO.gif)
+<img src="BouncingBallsDEMO.gif" alt="demo preview GIF" style="width: 80%;">
 
 ---
 
